@@ -3,62 +3,132 @@
 // 3）预订管理：包括预订房间、预订入住和解除预订（要有webservice接口）
 // 4）信息查询：包括在住客人列表、预订客人列表
 // 5）报表统计：包括开房记录统计、退房结账和预订房间统计
-const model = require('./model');
+const models = require('./model');
 
 let
-    Pet = model.Pet,
-    User = model.User;
+    Room = models.room,
+    Customer = models.customer,
+    Manager = models.manager,
+    Book = models.book,
+    Removeroom = models.user;
 
-(async () => {
-    var user = await User.create({
-        name: 'John',
-        gender: false,
-        email: 'john-' + Date.now() + '@garfield.pet',
-        passwd: 'hahaha'
-    });
-    console.log('created: ' + JSON.stringify(user));
-    var cat = await Pet.create({
-        ownerId: user.id,
-        name: 'Garfield',
-        gender: false,
-        birth: '2007-07-07',
-    });
-    console.log('created: ' + JSON.stringify(cat));
-    var dog = await Pet.create({
-        ownerId: user.id,
-        name: 'Odie',
-        gender: false,
-        birth: '2008-08-08',
-    });
-    console.log('created: ' + JSON.stringify(dog));
-})();
+module.exports = {
+    // 前台操作
+    getManager :async () => {
+        var manager = await Manager.findAll({
+            where: {
+                version:1
+            }
+        });
+        // let Manager = model.manager;
+            // var manager = await Manager.findAll(); 
+    console.log("查找成功！");
+    console.log(`find ${manager.length} managers:`);
+    let data = [];
+        for (let p of manager) {
+            console.log(JSON.stringify(p.dataValues));
+            data.push(p.dataValues)
+        }
+        return data;
+    },
+    getRoom :async () => {
+        var room = await Room.findAll();
+        // let Manager = model.manager;
+            // var manager = await Manager.findAll(); 
+    console.log("查找Room成功！");
+    console.log(`find ${room.length} rooms:`);
+    let data = [];
+        for (let p of room) {
+            console.log(JSON.stringify(p.dataValues));
+            data.push(p.dataValues)
+        }
+        return data;
+    },
+    getremoveRoom:async () => {
+        var removeroom = await Removeroom.findAll();
+        // let Manager = model.manager;
+            // var manager = await Manager.findAll(); 
+    console.log("查找Removeroom成功！");
+    console.log(`find ${removeroom.length} Removeroom:`);
+    let data = [];
+        for (let p of removeroom) {
+            console.log(JSON.stringify(p.dataValues));
+            data.push(p.dataValues)
+        }
+        return data;
+    },
+    addCustomer :async (Cname,cardID,gender) => {
+        var customer = await Customer.create({
+            name: Cname,
+            cardID:cardID,
+            gender: gender
+        });
+        console.log("添加顾客成功！");
+        
+    },
+    addRoom :async (roomId,name,price,free,level) => {
+        var room = await Room.create({
+            roomId:roomId,
+            name: name,
+            price:price,
+            free: free,
+            level:level
+        });
+        console.log("添加房间成功！"); 
+    },
+    addRemoveroom :async (TcardID,roomId) => {
+        var removeroom = await Removeroom.create({
+            roomId:roomId,
+            TcardID:TcardID
+        });
+        console.log("退房成功！"); 
+    },
+    addBook :async (customerId,roomId,roomnumber,deposit,duration) => {
+        var book = await Book.create({
+            customerId: customerId,
+            roomId: roomId,
+            roomnumber:roomnumber,
+            deposit:deposit,
+            duration:duration
+        });
+        console.log("添加订单成功！"); 
+    },
+    UpdataBook :async (a) => {
+        var books = await Book.findAll({
+            where: {
+                id: '1'
+            }
+        });
+        for (let p of books) {
+        p.customerId= a.customerId;
+        p.roomId=a.roomId,
+        p.roomnumber=a.roomnumber,
+        p.deposit=a.deposit,
+        p.duration=a.duration,
+        p.updatedAt = Date.now();
+        p.version ++;
+        await p.save();
+        }
+        console.log("更新订单成功！");
 
+    },
+    deleteBook :async (a) => {
+        var books = await Book.findAll({
+            where: {
+                id: '1'
+            }
+        });
+        console.log(`find ${pets.length} pets:`);
+        for (let p of books) {
+            if (p.version === 3) {
+                await p.destroy();
+                console.log(`${p.name} was destroyed.`);
+            }
+        }
+        return null;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 
 // const Sequelize = require('sequelize');
@@ -144,43 +214,5 @@ let
 //     //         }
 //     //     }
 //     // })();
-//     // 查询数据
-//     // (async () => {
-//     //     var pets = await Pet.findAll({
-//     //         where: {
-//     //             name: 'Gaffey'
-//     //         }
-//     //     });
-//     //     console.log(`find ${pets.length} pets:`);
-//     //     for (let p of pets) {
-//     //         console.log(JSON.stringify(p));
-//     //     }
-//     // })();
-//     // 更新数据，可以对查询到的实例调用save()方法
-//     // (async () => {
-//     //     var p = await queryFromSomewhere();
-//     //     p.gender = true;
-//     //     p.updatedAt = Date.now();
-//     //     p.version ++;
-//     //     await p.save();
-//     // })();
-//     // 删除数据，可以对查询到的实例调用destroy()方法：
-//     // (async () => {
-//     //     var p = await queryFromSomewhere();
-//     //     await p.destroy();
-//     // })();
-
-// //     Model
-// // 我们把通过sequelize.define()返回的Pet称为Model，它表示一个数据模型。
-
-// // 我们把通过Pet.findAll()返回的一个或一组对象称为Model实例，每个实例都可以直接通过JSON.stringify序列化为JSON字符串。但是它们和普通JSON对象相比，多了一些由Sequelize添加的方法，比如save()和destroy()。调用这些方法我们可以执行更新或者删除操作。
-
-// // 所以，使用Sequelize操作数据库的一般步骤就是：
-
-// // 首先，通过某个Model对象的findAll()方法获取实例；
-
-// // 如果要更新实例，先对实例属性赋新值，再调用save()方法；
-
-// // 如果要删除实例，直接调用destroy()方法。
-
-// // 注意findAll()方法可以接收where、order这些参数，这和将要生成的SQL语句是对应的。
+    // 查询数据
+    

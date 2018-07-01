@@ -1,8 +1,8 @@
 var config = {
     dialect: 'mysql',
-    database: 'nodejs',
-    username: 'www',
-    password: 'www',
+    database: 'hotel',
+    username: 'root',
+    password: 'root',
     host: 'localhost',
     port: 3306
 };

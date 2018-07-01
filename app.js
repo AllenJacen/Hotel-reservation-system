@@ -6,6 +6,10 @@ const controller = require('./controller');
 
 const templating = require('./templating');
 
+const rest = require('./rest');
+
+// const session = require('koa-session');
+
 const app = new Koa();
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -53,9 +57,12 @@ app.use(templating('views', {
 // 在编写代码的时候，要根据当前环境作不同的判断。
 // 注意：生产环境上必须配置环境变量NODE_ENV = 'production'，而开发环境不需要配置，实际上NODE_ENV可能是undefined，所以判断的时候，不要用NODE_ENV === 'development'。
 
+// bind .rest() for ctx:
+app.use(rest.restify());
+
 // 最后一个middleware处理URL路由：
 // add controller:
 app.use(controller());
 
 app.listen(3000);
-console.log('app started at port 3000...');
+console.log('app started at port 3000...'); 

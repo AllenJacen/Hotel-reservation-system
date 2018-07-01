@@ -1,30 +1,34 @@
 {
-    "name": "test",
-    "version": "1.0.0",
-    "description": "koa 2 example with nunjucks as view",
-    "main": "app.js",
-    "private": true,
-    "scripts": {
-      "start": "node --use_strict app.js"
-    },
-    "keywords": [
-      "koa",
-      "async",
-      "nunjucks"
-  ],
+  "name": "hotel",
+  "version": "1.0.0",
+  "description": "null",
+  "main": "app.js",
+  "dependencies": {
+    "koa": "2.0.0",
+    "koa-bodyparser": "3.2.0",
+    "koa-passport": "^4.1.0",
+    "koa-router": "7.0.0",
+    "koa-session": "^5.8.1",
+    "mime": "1.3.4",
+    "mysql": "2.11.1",
+    "mz": "2.4.0",
+    "nunjucks": "2.4.2",
+    "sequelize": "3.24.1",
+    "soap-server": "^0.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node --use_strict app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/AllenJacen/Hotel-reservation-system.git"
-},
-  "license": "Apache-2.0",
-    "dependencies": {
-      "koa": "2.0.0",
-      "koa-bodyparser": "3.2.0",
-      "koa-router": "7.0.0",
-      "nunjucks": "2.4.2",
-      "mime": "1.3.4",
-      "mz": "2.4.0",
-      "sequelize": "3.24.1",
-      "mysql": "2.11.1"
-    }
-  }
+    "url": "git+https://github.com/AllenJacen/Hotel-reservation-system.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AllenJacen/Hotel-reservation-system/issues"
+  },
+  "homepage": "https://github.com/AllenJacen/Hotel-reservation-system#readme"
+}

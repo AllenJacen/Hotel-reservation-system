@@ -17,6 +17,19 @@ for (let f of js_files) {
     module.exports[name] = require(__dirname + '/models/' + f);
 }
 
+// var sequelize=require('sequelize');
+// var Book = sequelize.import('./user.js');
+// var Customer = sequelize.import('./userCheckin.js');
+// var Room = sequelize.import('./userAddress.js');
+// console.log(model);
+// let Book = model.Book;
+// let Customer = model.Customer;
+// let Room = model.Room;
+// Room.hasOne(Book);
+// Book.belongsTo(Room);
+// Customer.hasOne(Room);
+// Room.belongsTo(Customer);
+
 module.exports.sync = () => {
     db.sync();
 };

@@ -28,7 +28,7 @@ if (process.env.NODE_ENV === 'test') {
             config = Object.assign(config, require(overrideConfig));
         }
     } catch (err) {
-        console.log(`Cannot load ${overrideConfig}.`);
+        console.log(`jius w Cannot load ${overrideConfig}.`);
     }
 }
 
